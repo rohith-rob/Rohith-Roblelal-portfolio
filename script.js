@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile navigation toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
-    
+
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('nav-active');
         // Animate hamburger lines
@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Intersection Observer for scroll animations
     const faders = document.querySelectorAll('.fade-in');
-    
+
     const appearOptions = {
         threshold: 0.15,
         rootMargin: "0px 0px -50px 0px"
     };
 
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    const appearOnScroll = new IntersectionObserver(function (entries, observer) {
         entries.forEach(entry => {
             if (!entry.isIntersecting) {
                 return;
@@ -43,34 +43,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Form submission handling (prevent default reload)
     const form = document.getElementById('portfolio-form');
-    if(form) {
+    if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = form.querySelector('.submit-btn');
             const originalText = btn.textContent;
-            
+
             btn.textContent = 'Sending...';
             btn.style.opacity = '0.7';
-            
-            // Simulate network request
-            setTimeout(() => {
+
+            // Send data to Google Forms
+            const formData = new FormData(form);
+            fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScEWSOKDVXDGIZbCcI3tG5bmsIYO2OqVcDpCbZhHzOsFUvTGg/formResponse', {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).then(() => {
                 btn.textContent = 'Message Sent!';
                 btn.style.background = 'linear-gradient(90deg, #10b981, #059669)'; // Green success
                 btn.style.opacity = '1';
                 form.reset();
-                
+
                 // Revert after 3 seconds
                 setTimeout(() => {
                     btn.textContent = originalText;
                     btn.style.background = '';
                 }, 3000);
-            }, 1000);
+            }).catch((error) => {
+                console.error('Error!', error.message);
+                btn.textContent = 'Error!';
+                btn.style.background = '#e11d48'; // Red error
+                btn.style.opacity = '1';
+
+                // Revert after 3 seconds
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            });
         });
     }
 
     // Active state for navigation based on scroll position
     const sections = document.querySelectorAll('section');
-    
+
     window.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
