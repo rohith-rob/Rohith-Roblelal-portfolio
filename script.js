@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Add Mouse Follower Blob
+    const mouseBlob = document.createElement('div');
+    mouseBlob.className = 'mouse-blob';
+    document.body.appendChild(mouseBlob);
+
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        mouseBlob.style.transform = `translate(${x - 150}px, ${y - 150}px)`;
+    });
+
     // Mobile navigation toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
@@ -102,6 +113,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (link.getAttribute('href').substring(1) === current) {
                 link.classList.add('active');
             }
+        });
+    });
+
+    // Add gentle hover tilt effect for cards
+    const cards = document.querySelectorAll('.glass-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `translateY(-10px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
         });
     });
 });
