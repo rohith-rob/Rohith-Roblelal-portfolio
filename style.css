@@ -500,7 +500,43 @@ main {
 }
 
 
-/* Blog Section */
+/* Certifications Section */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.cert-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cert-icon {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+    background: rgba(59, 130, 246, 0.1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    flex-shrink: 0;
+}
+
+.cert-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.cert-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
 .blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
